@@ -10,4 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install need packages
-        run: sudo apt install debootstrap make git
+        run: |
+          sudo apt update
+          sudo apt install -y debootstrap make git
