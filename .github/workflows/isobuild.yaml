@@ -22,7 +22,8 @@ jobs:
         run: sudo dpkg -i config/packages/blankon-keyring_2020.10.29-1.0_all.deb
       - name: Setup live build
         run: |
-          sudo cat <<EOF > /usr/share/debootstrap/scripts/verbeek
+          sudo su -
+          cat <<EOF > /usr/share/debootstrap/scripts/verbeek
           mirror_style release
           download_style apt
           finddebs_style from-indices
