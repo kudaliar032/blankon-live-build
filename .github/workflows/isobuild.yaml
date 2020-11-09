@@ -1,0 +1,13 @@
+name: BlankOn Live Build
+
+on:
+  push:
+    branches: [actions]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install need packages
+        run: sudo apt install debootstrap make git
