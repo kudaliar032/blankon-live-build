@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    name: Build ISO
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,25 +22,6 @@ jobs:
       - name: Install BlankOn keyring
         run: sudo dpkg -i config/packages/blankon-keyring_2020.10.29-1.0_all.deb
       - name: Setup live build
-        run: |
-          sudo su -
-          cat <<EOF > /usr/share/debootstrap/scripts/verbeek
-          mirror_style release
-          download_style apt
-          finddebs_style from-indices
-          variants - buildd fakechroot minbase
-          keyring /usr/share/keyrings/blankon-archive-keyring.gpg
-
-          # include common settings
-          if [ -e "$DEBOOTSTRAP_DIR/scripts/debian-common" ]; then
-            . "$DEBOOTSTRAP_DIR/scripts/debian-common"
-          elif [ -e /debootstrap/debian-common ]; then
-            . /debootstrap/debian-common
-          elif [ -e "$DEBOOTSTRAP_DIR/debian-common" ]; then
-            . "$DEBOOTSTRAP_DIR/debian-common"
-          else
-            error 1 NOCOMMON "File not found: debian-common"
-          fi
-          EOF
-      - name: Start build
+        run: sudo curl https://gist.githubusercontent.com/kudaliar032/df3e7dc22572678bdd322d3b26d4c354/raw/664e1debe496c3f4197169230bcc5c65807bf69b/verbeek -o /usr/share/debootstrap/scripts/verbeek
+      - name: Kick build 
         run: bash build.sh
